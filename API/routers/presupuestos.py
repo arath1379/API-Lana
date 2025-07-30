@@ -56,4 +56,11 @@ def eliminar_presupuesto_endpoint(presupuesto_id: int, db: Session = Depends(get
 
 @router.get("/alertas/")
 def obtener_alertas(usuario_id: int, db: Session = Depends(get_db)):
-    return verificar_alertas(db, usuario_id)
+    """
+    Obtener alertas de presupuestos para un usuario
+    """
+    try:
+        alertas = verificar_alertas(db, usuario_id)
+        return alertas
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error obteniendo alertas: {str(e)}")
